@@ -1,33 +1,45 @@
-const gameBoard = (() => {
-  const sections = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  let isFirstPlayer = true;
-  const grid = document.querySelector(".grid");
-
-  sections.forEach((sect) => {
-    const section = document.createElement("div");
-    section.classList.add("section");
-    section.dataset.id = sect;
-    section.addEventListener("click", (e) => {
-      if (isFirstPlayer) {
-        e.currentTarget.classList.add("active-1");
-        isFirstPlayer = !isFirstPlayer;
-      } else {
-        e.currentTarget.classList.add("active-2");
-        isFirstPlayer = !isFirstPlayer;
-      }
+const gameBoard = () => {
+  const showGrid = (sections, grid) => {
+    sections.forEach((sect) => {
+      const section = document.createElement("div");
+      section.classList.add("section");
+      section.dataset.id = sect;
+      section.addEventListener("click", (e) => {
+        gameLogic.sectionClick(e.currentTarget);
+      });
+      grid.append(section);
     });
-    grid.append(section);
-  });
-})();
+  };
+  return { showGrid };
+};
 
-function Player(name) {
-  let userName = name;
+const createPlayer = (name, marker) => {
   let score = 0;
-
   const getScore = () => score;
-  const addScore = () => {
-    score++;
+  const addScore = () => score++;
+
+  return { name, marker, getScore, addScore };
+};
+
+const gameLogic = () => {
+  const sections = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const grid = document.querySelector(".grid");
+  gameBoard.showGrid(sections, grid);
+  const player1 = createPlayer("Вовчик", "X");
+  const player2 = createPlayer("Вась", "O");
+  let isFirstPlayer = true;
+  const sectionClick = (sect) => {
+    if (isFirstPlayer) {
+      sect.classList.add("active-1");
+      isFirstPlayer = !isFirstPlayer;
+    } else {
+      sect.classList.add("active-2");
+      isFirstPlayer = !isFirstPlayer;
+    }
   };
 
-  return { userName, getScore, addScore };
-}
+  const isWin = () => {};
+  return { sectionClick };
+};
+
+gameLogic();

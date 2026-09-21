@@ -20,6 +20,9 @@ body {
   cursor: pointer;
 }
 
+.player {
+}
+
 .active-1,
 .active-2 {
   background-repeat: no-repeat;
