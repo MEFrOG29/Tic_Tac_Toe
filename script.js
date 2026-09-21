@@ -1,16 +1,27 @@
-const gameBoard = () => {
+const gameBoard = (onSectionClick) => {
   const showGrid = (sections, grid) => {
     sections.forEach((sect) => {
       const section = document.createElement("div");
       section.classList.add("section");
       section.dataset.id = sect;
       section.addEventListener("click", (e) => {
-        gameLogic.sectionClick(e.currentTarget);
+        onSectionClick(section);
       });
       grid.append(section);
     });
   };
-  return { showGrid };
+
+  const showPlayer = (player, container) => {
+    const printPlayer = document.createElement("p");
+    printPlayer.classList.add("player");
+    printPlayer.textContent = `${player.name}: ${player.getScore()}`;
+    container.append(printPlayer);
+
+    return (newScore) => {
+      printPlayer.textContent = `${player.name}: ${newScore}`;
+    };
+  };
+  return { showGrid, showPlayer };
 };
 
 const createPlayer = (name, marker) => {
@@ -24,22 +35,87 @@ const createPlayer = (name, marker) => {
 const gameLogic = () => {
   const sections = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const grid = document.querySelector(".grid");
-  gameBoard.showGrid(sections, grid);
-  const player1 = createPlayer("Вовчик", "X");
-  const player2 = createPlayer("Вась", "O");
-  let isFirstPlayer = true;
+  const playersContainer = document.querySelector(".players_container");
+  const player1 = createPlayer(prompt("Введите имя первого игрока"), "X");
+  const player2 = createPlayer(prompt("Введите имя второго игрока"), "O");
+  let currentPlayer = player1;
+  const winningCombinations = [
+    [1, 2, 3],
+    [3, 4, 5],
+    [7, 8, 9],
+    [1, 4, 7],
+    [2, 5, 8],
+    [3, 6, 9],
+    [1, 5, 9],
+    [3, 5, 7],
+  ];
+
   const sectionClick = (sect) => {
-    if (isFirstPlayer) {
+    if (currentPlayer == player1) {
       sect.classList.add("active-1");
-      isFirstPlayer = !isFirstPlayer;
     } else {
       sect.classList.add("active-2");
-      isFirstPlayer = !isFirstPlayer;
     }
+
+    if (checkWin(currentPlayer.marker)) {
+      alert(`Победил игрок ${currentPlayer.name}!`);
+      currentPlayer.addScore();
+      if (currentPlayer === player1) {
+        updatePlayer1(currentPlayer.getScore());
+      } else {
+        updatePlayer2(currentPlayer.getScore());
+      }
+      newGame();
+    } else if (checkDraw()) {
+      alert("Ничья");
+      newGame();
+    }
+
+    currentPlayer = currentPlayer === player1 ? player2 : player1;
   };
 
-  const isWin = () => {};
-  return { sectionClick };
+  const checkWin = (marker) => {
+    const playerMoves = [];
+    const allSections = document.querySelectorAll(".section");
+    allSections.forEach((section) => {
+      const targetClass = marker === "X" ? "active-1" : "active-2";
+      if (section.classList.contains(targetClass)) {
+        playerMoves.push(Number(section.dataset.id));
+      }
+    });
+
+    return winningCombinations.some((combination) => {
+      return combination.every((index) => playerMoves.includes(index));
+    });
+  };
+
+  const checkDraw = () => {
+    const allSections = document.querySelectorAll(".section");
+    const isBoardFull = Array.from(allSections).every(
+      (sect) =>
+        sect.classList.contains("active-1") ||
+        sect.classList.contains("active-2"),
+    );
+    return isBoardFull;
+  };
+
+  const newGame = () => {
+    allSections = document.querySelectorAll(".section");
+    allSections.forEach((sect) => {
+      if (sect.classList.contains("active-1")) {
+        sect.classList.remove("active-1");
+      }
+      if (sect.classList.contains("active-2")) {
+        sect.classList.remove("active-2");
+      }
+    });
+  };
+
+  const board = gameBoard(sectionClick);
+  board.showGrid(sections, grid);
+  const updatePlayer1 = board.showPlayer(player1, playersContainer);
+  const updatePlayer2 = board.showPlayer(player2, playersContainer);
+  return {};
 };
 
 gameLogic();
