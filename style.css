@@ -1,0 +1,37 @@
+html {
+  background: black;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.section {
+  width: 5rem;
+  height: 5rem;
+  border: 0.2rem solid white;
+  cursor: pointer;
+}
+
+.active-1,
+.active-2 {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  pointer-events: none;
+}
+
+.active-1 {
+  background-image: url("icons/сlose.svg");
+}
+
+.active-2 {
+  background-image: url("icons/o.svg");
+}
