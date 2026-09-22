@@ -17,11 +17,16 @@
           <label for="first_player">Имя первого игрока:</label>
           <input type="text" name="first_player_name" id="first_player" />
         </div>
+        <div class="form_group">
+          <label for="second_player">Имя второго игрока:</label>
+          <input type="text" name="second_player_name" id="second_player" />
+        </div>
         <button type="submit" id="start_btn" class="start_btn">Начать</button>
       </form>
     </dialog>
     <dialog class="restart_game_dialog">
-      <h2 class="restart_title"></h2>
+      <h2 class="restart_title">Игра Окончена</h2>
+      <p class="who_win"></p>
       <div class="restart_actions">
         <button class="restart_new_btn">Новая игра</button>
         <button class="restart_btn">Заново</button>
