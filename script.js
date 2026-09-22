@@ -68,7 +68,7 @@ const gameLogic = () => {
       newGame();
     } else if (checkDraw()) {
       alert("Ничья");
-      newGame();
+      restart();
     }
 
     currentPlayer = currentPlayer === player1 ? player2 : player1;
@@ -99,7 +99,7 @@ const gameLogic = () => {
     return isBoardFull;
   };
 
-  const newGame = () => {
+  const restart = () => {
     allSections = document.querySelectorAll(".section");
     allSections.forEach((sect) => {
       if (sect.classList.contains("active-1")) {
@@ -109,6 +109,11 @@ const gameLogic = () => {
         sect.classList.remove("active-2");
       }
     });
+  };
+
+  const newGameDialog = () => {
+    const body = document.querySelector("body");
+    const dialog = document.querySelector(".new_game_dialog");
   };
 
   const board = gameBoard(sectionClick);
