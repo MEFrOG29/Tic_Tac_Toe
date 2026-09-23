@@ -14,14 +14,16 @@
       <form method="dialog" class="new_game_form">
         <h2 class="title_form">Новая игра</h2>
         <div class="form_group">
-          <label for="first_player">Имя первого игрока:</label>
+          <label class="label_name" for="first_player">Игрок 1:</label>
           <input type="text" name="first_player_name" id="first_player" />
         </div>
         <div class="form_group">
-          <label for="second_player">Имя второго игрока:</label>
+          <label class="label_name" for="second_player">Игрок 2:</label>
           <input type="text" name="second_player_name" id="second_player" />
         </div>
-        <button type="submit" id="start_btn" class="start_btn">Начать</button>
+        <div class="start_actions">
+          <button type="submit" id="start_btn" class="start_btn">Начать</button>
+        </div>
       </form>
     </dialog>
     <dialog class="restart_game_dialog">

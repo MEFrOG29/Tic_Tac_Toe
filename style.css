@@ -41,3 +41,59 @@ body {
 .active-2 {
   background-image: url("icons/o.svg");
 }
+
+.restart_game_dialog,
+.new_game_dialog {
+  padding: 0;
+  border: solid 3px white;
+  background-color: black;
+  width: 20rem;
+  height: 12rem;
+}
+
+.title_form,
+.restart_title {
+  color: white;
+  text-align: center;
+}
+
+.form_group {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.label_name,
+.who_win {
+  color: white;
+  font-size: 1.4rem;
+}
+
+input {
+  border: solid 1px white;
+  background-color: black;
+  color: white;
+}
+
+.start_actions,
+.restart_actions {
+  display: flex;
+  justify-content: end;
+}
+
+.start_btn,
+.restart_new_btn,
+.restart_btn {
+  border: solid 1px white;
+  margin-right: 1rem;
+  color: white;
+  background-color: black;
+  padding: 0.5rem 0.5rem;
+  cursor: pointer;
+}
+
+.who_win {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
